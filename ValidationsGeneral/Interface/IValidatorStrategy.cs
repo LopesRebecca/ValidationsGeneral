@@ -4,6 +4,6 @@ namespace ValidationsGeneral.Interface
 {
     public interface IValidatorStrategy
     {
-        ValidationResult Validate(string input, string erroMensage);
+        ValidationResult Validate(string input);
     }
 }

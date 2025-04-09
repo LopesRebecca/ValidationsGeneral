@@ -1,28 +1,56 @@
 ﻿using System.Text.RegularExpressions;
 using ValidationsGeneral.Common;
+using ValidationsGeneral.Interface;
 using ValidationsGeneral.Validator.Identity;
 
 namespace ValidationsGeneral.Validator.Identity
 {
     public class CnpjValidatorStrategy : ValidatorBase
     {
-        protected override ValidationResult ValidateInternal(string input, string erroMensage)
+        private readonly IValidationMessageResolver? _messageResolver;
+
+        public CnpjValidatorStrategy(IValidationMessageResolver? messageResolver = null)
         {
-            if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail("CNPJ em branco");
+            _messageResolver = messageResolver;
+        }
 
-            // Remove caracteres não numéricos
-            var cnpj = Regex.Replace(input, @"[^\d]", "");
+        public ValidationResult Validate(string input, string? customMessage = null)
+        {
+            var result = ValidateInternal(input);
 
-            // Verifica se o CNPJ tem 14 dígitos
-            if (cnpj.Length != 14) return ValidationResult.Fail("CNPJ com menos de 14 caracteres");
+            if (!result.IsValid)
+            {
+                var resolvedMessage = customMessage
+                    ?? _messageResolver?.Resolve(result.Code!)
+                    ?? null;
 
-            // Verifica se todos os dígitos são iguais
-            if (new string(cnpj[0], cnpj.Length) == cnpj) return ValidationResult.Fail("CNPJ inválido");
+                return ValidationResult.Fail(result.Code!, resolvedMessage);
+            }
 
-            // Calcula os dígitos verificadores
-            bool isValid = ValidateCnpjDigits(cnpj);
+            return result;
+        }
+        //protected override ValidationResult ValidateInternal(string input, string erroMensage)
+        //{
+        //    if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail("CNPJ em branco");
 
-            return isValid ? ValidationResult.Success() : ValidationResult.Fail("CNPJ inválido");
+        //    // Remove caracteres não numéricos
+        //    var cnpj = Regex.Replace(input, @"[^\d]", "");
+
+        //    // Verifica se o CNPJ tem 14 dígitos
+        //    if (cnpj.Length != 14) return ValidationResult.Fail("CNPJ com menos de 14 caracteres");
+
+        //    // Verifica se todos os dígitos são iguais
+        //    if (new string(cnpj[0], cnpj.Length) == cnpj) return ValidationResult.Fail("CNPJ inválido");
+
+        //    // Calcula os dígitos verificadores
+        //    bool isValid = ValidateCnpjDigits(cnpj);
+
+        //    return isValid ? ValidationResult.Success() : ValidationResult.Fail("CNPJ inválido");
+        //}
+
+        protected override ValidationResult ValidateInternal(string input)
+        {
+            throw new NotImplementedException();
         }
 
         private bool ValidateCnpjDigits(string cnpj)

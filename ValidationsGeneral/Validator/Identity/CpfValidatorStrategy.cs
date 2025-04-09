@@ -1,27 +1,49 @@
 ﻿using System.Text.RegularExpressions;
 using ValidationsGeneral.Common;
+using ValidationsGeneral.Enum.Identity;
+using ValidationsGeneral.Interface;
+using static ValidationsGeneral.Common.ValidationResult;
 
 namespace ValidationsGeneral.Validator.Identity
 {
     public class CpfValidatorStrategy : ValidatorBase
     {
-        protected override ValidationResult ValidateInternal(string input, string message)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail("CPF em branco");
+        private readonly IValidationMessageResolver? _messageResolver;
 
-            // Remove caracteres não numéricos
+        public CpfValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        {
+            _messageResolver = messageResolver;
+        }
+
+        public ValidationResult Validate(string input, string? customMessage = null)
+        {
+            var result = ValidateInternal(input);
+
+            if (!result.IsValid)
+            {
+                var resolvedMessage = customMessage
+                    ?? _messageResolver?.Resolve(result.Code!)
+                    ?? null;
+
+                return ValidationResult.Fail(result.Code!, resolvedMessage);
+            }
+
+            return result;
+        }
+
+        protected override ValidationResult ValidateInternal(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail(CpfCodeMsg.Code.EX01.ToString());
+
             var cpf = Regex.Replace(input, @"[^\d]", "");
 
-            // Verifica se o CPF tem 11 dígitos
-            if (cpf.Length != 11) return ValidationResult.Fail("CPF com menos de 11 caracteres");
+            if (cpf.Length != 11) return ValidationResult.Fail(CpfCodeMsg.Code.EX02.ToString());
 
-            // Verifica se todos os dígitos são iguais
-            if (new string(cpf[0], cpf.Length) == cpf) return ValidationResult.Fail("CPF Inválido");
+            if (new string(cpf[0], cpf.Length) == cpf) return ValidationResult.Fail(CpfCodeMsg.Code.EX03.ToString());
 
-            // Calcula os dígitos verificadores
             bool isValid = ValidateCpfDigits(cpf);
 
-            return  isValid ? ValidationResult.Success() : ValidationResult.Fail(message);
+            return  isValid ? ValidationResult.Success() : ValidationResult.Fail(CpfCodeMsg.Code.EX04.ToString());
         }
 
         
