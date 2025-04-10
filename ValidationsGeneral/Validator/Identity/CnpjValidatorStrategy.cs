@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using ValidationsGeneral.Common;
+using ValidationsGeneral.Enum.Identity;
 using ValidationsGeneral.Interface;
-using ValidationsGeneral.Validator.Identity;
 
 namespace ValidationsGeneral.Validator.Identity
 {
@@ -29,28 +29,25 @@ namespace ValidationsGeneral.Validator.Identity
 
             return result;
         }
-        //protected override ValidationResult ValidateInternal(string input, string erroMensage)
-        //{
-        //    if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail("CNPJ em branco");
-
-        //    // Remove caracteres não numéricos
-        //    var cnpj = Regex.Replace(input, @"[^\d]", "");
-
-        //    // Verifica se o CNPJ tem 14 dígitos
-        //    if (cnpj.Length != 14) return ValidationResult.Fail("CNPJ com menos de 14 caracteres");
-
-        //    // Verifica se todos os dígitos são iguais
-        //    if (new string(cnpj[0], cnpj.Length) == cnpj) return ValidationResult.Fail("CNPJ inválido");
-
-        //    // Calcula os dígitos verificadores
-        //    bool isValid = ValidateCnpjDigits(cnpj);
-
-        //    return isValid ? ValidationResult.Success() : ValidationResult.Fail("CNPJ inválido");
-        //}
 
         protected override ValidationResult ValidateInternal(string input)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(input)) 
+                return ValidationResult.Fail(CnpjCodeMsg.Code.EX01.ToString());
+
+            var cnpj = Regex.Replace(input, @"[^\d]", "");
+
+            if (cnpj.Length != 14) 
+                return ValidationResult.Fail(CnpjCodeMsg.Code.EX02.ToString());
+
+            if (new string(cnpj[0], cnpj.Length) == cnpj) 
+                return ValidationResult.Fail(CnpjCodeMsg.Code.EX03.ToString());
+
+            bool isValid = ValidateCnpjDigits(cnpj);
+
+            return isValid 
+                ? ValidationResult.Success() 
+                : ValidationResult.Fail(CnpjCodeMsg.Code.EX04.ToString());
         }
 
         private bool ValidateCnpjDigits(string cnpj)

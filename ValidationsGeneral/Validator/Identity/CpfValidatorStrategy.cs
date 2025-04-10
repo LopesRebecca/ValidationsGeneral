@@ -33,17 +33,22 @@ namespace ValidationsGeneral.Validator.Identity
 
         protected override ValidationResult ValidateInternal(string input)
         {
-            if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail(CpfCodeMsg.Code.EX01.ToString());
+            if (string.IsNullOrWhiteSpace(input)) 
+                return ValidationResult.Fail(CpfCodeMsg.Code.EX01.ToString());
 
             var cpf = Regex.Replace(input, @"[^\d]", "");
 
-            if (cpf.Length != 11) return ValidationResult.Fail(CpfCodeMsg.Code.EX02.ToString());
+            if (cpf.Length != 11) 
+                return ValidationResult.Fail(CpfCodeMsg.Code.EX02.ToString());
 
-            if (new string(cpf[0], cpf.Length) == cpf) return ValidationResult.Fail(CpfCodeMsg.Code.EX03.ToString());
+            if (new string(cpf[0], cpf.Length) == cpf) 
+                return ValidationResult.Fail(CpfCodeMsg.Code.EX03.ToString());
 
             bool isValid = ValidateCpfDigits(cpf);
 
-            return  isValid ? ValidationResult.Success() : ValidationResult.Fail(CpfCodeMsg.Code.EX04.ToString());
+            return  isValid 
+                ? ValidationResult.Success() 
+                : ValidationResult.Fail(CpfCodeMsg.Code.EX04.ToString());
         }
 
         
