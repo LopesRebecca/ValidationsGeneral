@@ -1,0 +1,43 @@
+name: Release Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Tests
+        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+      - name: SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: NuGet Packaging
+        run: dotnet pack --configuration Release -o output
+
+      - name: Publish NuGet
+        run: dotnet nuget push "output/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
