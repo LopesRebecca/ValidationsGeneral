@@ -1,38 +1,34 @@
-name: Feature Validation
+name: CI - Validations
 
 on:
-  push:
-    branches-ignore:
-      - main
   pull_request:
+    branches: [main]
+  push:
     branches:
-      - main
+      - feature/**
+      - fix/**
+      - chore/**
 
 jobs:
-  build-test-analyze:
+  build-and-analyze:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
 
-      - name: Restaure
-        run: dotnet restore
+    - name: Install dependencies
+      run: dotnet restore
 
-      - name: Build
-        run: dotnet build --no-restore --configuration Release
+    - name: SonarCloud Scan - Begin
+      run: dotnet sonarscanner begin /k:"lopesrebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
 
-      - name: Tests
-        run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
-
-      - name: SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          projectBaseDir: .
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: SonarCloud Scan - End
+      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
