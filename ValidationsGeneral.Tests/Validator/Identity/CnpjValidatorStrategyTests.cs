@@ -25,7 +25,6 @@ namespace ValidationsGeneral.Tests.Validator.Identity
         [InlineData("abcdefghijklll", "EX02")]     // Letras
         [InlineData("11.222.333/0001", "EX02")]    // Incompleto
         [InlineData("12345678", "EX02")]           // Muito curto
-        //[InlineData("111.444.777-35", true)]
         public void Should_Invalidate_Invalid_Cnpjs(string cnpj, string code)
         {
             var result = _validator.Validate(cnpj);
