@@ -1,28 +1,53 @@
 ﻿using System.Text.RegularExpressions;
 using ValidationsGeneral.Common;
-using ValidationsGeneral.Validator.Identity;
+using ValidationsGeneral.Enum.Identity;
+using ValidationsGeneral.Interface;
 
 namespace ValidationsGeneral.Validator.Identity
 {
     public class CnpjValidatorStrategy : ValidatorBase
     {
-        protected override ValidationResult ValidateInternal(string input, string erroMensage)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return ValidationResult.Fail("CNPJ em branco");
+        private readonly IValidationMessageResolver? _messageResolver;
 
-            // Remove caracteres não numéricos
+        public CnpjValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        {
+            _messageResolver = messageResolver;
+        }
+
+        public ValidationResult Validate(string input, string? customMessage = null)
+        {
+            var result = ValidateInternal(input);
+
+            if (!result.IsValid)
+            {
+                var resolvedMessage = customMessage
+                    ?? _messageResolver?.Resolve(result.Code!)
+                    ?? null;
+
+                return ValidationResult.Fail(result.Code!, resolvedMessage);
+            }
+
+            return result;
+        }
+
+        protected override ValidationResult ValidateInternal(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) 
+                return ValidationResult.Fail(CnpjCodeMsg.Code.EX01.ToString());
+
             var cnpj = Regex.Replace(input, @"[^\d]", "");
 
-            // Verifica se o CNPJ tem 14 dígitos
-            if (cnpj.Length != 14) return ValidationResult.Fail("CNPJ com menos de 14 caracteres");
+            if (cnpj.Length != 14) 
+                return ValidationResult.Fail(CnpjCodeMsg.Code.EX02.ToString());
 
-            // Verifica se todos os dígitos são iguais
-            if (new string(cnpj[0], cnpj.Length) == cnpj) return ValidationResult.Fail("CNPJ inválido");
+            if (new string(cnpj[0], cnpj.Length) == cnpj) 
+                return ValidationResult.Fail(CnpjCodeMsg.Code.EX03.ToString());
 
-            // Calcula os dígitos verificadores
             bool isValid = ValidateCnpjDigits(cnpj);
 
-            return isValid ? ValidationResult.Success() : ValidationResult.Fail("CNPJ inválido");
+            return isValid 
+                ? ValidationResult.Success() 
+                : ValidationResult.Fail(CnpjCodeMsg.Code.EX04.ToString());
         }
 
         private bool ValidateCnpjDigits(string cnpj)

@@ -1,9 +1,34 @@
 ﻿using ValidationsGeneral.Common;
+using ValidationsGeneral.Enum.Identity;
+using ValidationsGeneral.Interface;
 
 namespace ValidationsGeneral.Validator.Finance
 {
     public class CardCreditValidatorStrategy : ValidatorBase
     {
+        private readonly IValidationMessageResolver? _messageResolver;
+
+        public CardCreditValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        {
+            _messageResolver = messageResolver;
+        }
+
+        public ValidationResult Validate(string input, string? customMessage = null)
+        {
+            var result = ValidateInternal(input);
+
+            if (!result.IsValid)
+            {
+                var resolvedMessage = customMessage
+                    ?? _messageResolver?.Resolve(result.Code!)
+                    ?? null;
+
+                return ValidationResult.Fail(result.Code!, resolvedMessage);
+            }
+
+            return result;
+        }
+
         protected override ValidationResult ValidateInternal(string input)
         {
             int sum = 0;
@@ -28,7 +53,9 @@ namespace ValidationsGeneral.Validator.Finance
 
             bool isValid = sum % 10 == 0;
             
-            return isValid ? ValidationResult.Success() : ValidationResult.Fail("Cartão Inválido");
+            return isValid 
+                ? ValidationResult.Success() 
+                : ValidationResult.Fail(CardCreditMsg.Code.EX01.ToString());
         }
     }
 }

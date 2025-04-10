@@ -1,17 +1,23 @@
-﻿namespace ValidationsGeneral.Common
+﻿using System.Globalization;
+
+namespace ValidationsGeneral.Common
 {
     public class ValidationResult
     {
         public bool IsValid { get; }
-        public string? ErrorMessage { get; }
+        public string? Code { get; }
+        public string? Message { get; }
 
-        public ValidationResult(bool isValid, string? errorMessage = null)
+        private ValidationResult(bool isValid, string? code = null, string? message = null)
         {
             IsValid = isValid;
-            ErrorMessage = errorMessage;
+            Code = code;
+            Message = message;
         }
 
         public static ValidationResult Success() => new(true);
-        public static ValidationResult Fail(string message) => new(false, message);
+
+        public static ValidationResult Fail(string code, string? message = null) =>
+            new(false, code, message);
     }
 }

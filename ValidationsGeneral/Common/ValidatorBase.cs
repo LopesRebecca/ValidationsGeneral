@@ -1,18 +1,19 @@
-﻿using ValidationsGeneral.Enum;
-using ValidationsGeneral.Interface;
+﻿using ValidationsGeneral.Interface;
 
 namespace ValidationsGeneral.Common
 {
     public abstract class ValidatorBase : IValidatorStrategy
     {
-        public ValidationResult Validate(string input, string menssage)
+        public ValidationResult Validate(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-                return ValidationResult.Fail(menssage is null ? "Erro Generico": menssage);
-
-            return ValidateInternal(input, menssage);
+            return ValidateInternal(input);
         }
 
-        protected abstract ValidationResult ValidateInternal(string input, string menssage);
+        protected abstract ValidationResult ValidateInternal(string input);
+
+        protected ValidationResult Fail(string code, string? message = null)
+        {
+            return ValidationResult.Fail(code, message);
+        }
     }
 }
