@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
   
-    - name: Install dotnet sonarscanner
+    - name: Install SonarQube Cloud scanner
       run: dotnet tool install --global dotnet-sonarscanner
       
     - name: SonarCloud Scan - Begin
