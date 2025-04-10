@@ -21,6 +21,9 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore ./ValidationsGeneral/ValidationsGeneral.csproj
+  
+    - name: Install dotnet sonarscanner
+      run: dotnet tool install --global dotnet-sonarscanner
       
     - name: SonarCloud Scan - Begin
       run: dotnet sonarscanner begin /k:"lopesrebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.verbose=true
