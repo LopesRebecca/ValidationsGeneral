@@ -1,0 +1,35 @@
+name: CI - Validations
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build-and-analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
+
+    - name: Install dependencies
+      run: dotnet restore ./ValidationsGeneral/ValidationsGeneral.csproj
+  
+    - name: Install dotnet sonarscanner
+      run: dotnet tool install --global dotnet-sonarscanner
+      
+    - name: SonarCloud Scan - Begin
+      run: dotnet sonarscanner begin /k:"lopesrebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.verbose=true
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: SonarCloud Scan - End
+      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
