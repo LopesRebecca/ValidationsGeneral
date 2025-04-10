@@ -23,7 +23,7 @@ jobs:
       run: dotnet restore
 
     - name: SonarCloud Scan - Begin
-      run: dotnet sonarscanner begin /k:"lopesrebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      run: dotnet sonarscanner begin /k:"lopesrebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.verbose=true
     
     - name: Build
       run: dotnet build --no-restore --configuration Release
