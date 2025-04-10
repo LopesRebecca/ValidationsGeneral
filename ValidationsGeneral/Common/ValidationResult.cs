@@ -19,10 +19,5 @@ namespace ValidationsGeneral.Common
 
         public static ValidationResult Fail(string code, string? message = null) =>
             new(false, code, message);
-
-        //public interface IValidationMessageResolver
-        //{
-        //    string Resolve(string code, CultureInfo? culture = null);
-        //}
     }
 }
