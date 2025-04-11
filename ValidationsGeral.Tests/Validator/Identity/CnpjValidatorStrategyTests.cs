@@ -19,7 +19,7 @@ namespace ValidationsGeral.Tests.Validator.Identity
         [TestCase(" ", "EX01")]
         [TestCase("", "CNPJ em branco.")]
         [TestCase(" ", "CNPJ em branco.")]
-        public void Validate_EmpityCpf_ReturnsInvalid(string input, string customMessage)
+        public void Validate_EmpityCNPJ_ReturnsInvalid(string input, string customMessage)
         {
             // Act
             var result = _strategy!.Validate(input, customMessage);
@@ -31,10 +31,10 @@ namespace ValidationsGeral.Tests.Validator.Identity
         }
 
         [TestCase("80.567.731/0001-5", "EX02")]
-        [TestCase("876008620001336", "CPF com o tamanho inválido")]
-        [TestCase("123", "O CPF deve conter exatamente 11 dígitos.")]
+        [TestCase("876008620001336", "CNPJ com o tamanho inválido")]
+        [TestCase("123", "O CNPJ deve conter exatamente 11 dígitos.")]
         [TestCase("testePalavras", "EX02")]
-        public void Validate_InvalidLegthCpf_ReturnsInvalid(string input, string customMessage)
+        public void Validate_InvalidLegthCNPJ_ReturnsInvalid(string input, string customMessage)
         {
             // Act
             var result = _strategy!.Validate(input, customMessage);
@@ -61,7 +61,7 @@ namespace ValidationsGeral.Tests.Validator.Identity
 
         [TestCase("70191515000103", "EX04")]
         [TestCase("58.670.806/0001-79", "CNPJ inválido, verifique")]
-        public void Validate_InvalidCPF_ReturnsInvalid(string input, string customMessage)
+        public void Validate_InvalidCNPJ_ReturnsInvalid(string input, string customMessage)
         {
             // Act
             var result = _strategy!.Validate(input, customMessage);
