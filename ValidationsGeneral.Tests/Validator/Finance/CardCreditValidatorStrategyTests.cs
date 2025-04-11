@@ -1,29 +1,14 @@
-using ValidationsGeneral.Enum.Identity;
-using ValidationsGeneral.Exception.Finance;
-using ValidationsGeneral.Validator.Finance;
+using NUnit.Framework;
 
-namespace ValidationsGeneral.Tests.Validator.Identity
+namespace ValidationsGeneral.Validator.Finance.Tests
 {
+    [TestFixture()]
     public class CardCreditValidatorStrategyTests
     {
-        private readonly CardCreditValidatorStrategy _defaultValidator = new();
-        private readonly CardCreditValidatorStrategy _withResolver;
-
-        public CardCreditValidatorStrategyTests()
+        [Test()]
+        public void CardCreditValidatorStrategyTest()
         {
-            _withResolver = new CardCreditValidatorStrategy(new CardCreditException());
+            Assert.Fail();
         }
-
-        [Theory]
-        [InlineData("4111 1111 1111", true)]
-        [InlineData("0000 0000 0000", false)]
-        [InlineData("99999999999", false)]
-        [InlineData("", false)]
-        public void Validate_WithDefaultValidator_ShouldReturnCorrectResult(string cardCredit, bool expectedValid)
-        {
-            var result = _defaultValidator.Validate(cardCredit);
-            Assert.Equal(expectedValid, result.IsValid);
-        }
-       
     }
 }

@@ -1,9 +1,10 @@
-﻿using ValidationsGeneral.Enum.Identity;
+﻿using NUnit.Framework;
 using ValidationsGeneral.Exception.identity;
-using ValidationsGeneral.Validator.Identity;
+using ValidationsGeneral.Tests.CaseTestEvente.Identity;
 
-namespace ValidationsGeneral.Tests.Validator.Identity
+namespace ValidationsGeneral.Validator.Identity.Tests
 {
+    [TestFixture]
     public class CpfValidatorStrategyTests
     {
         private readonly CpfValidatorStrategy _defaultValidator = new();
@@ -14,36 +15,22 @@ namespace ValidationsGeneral.Tests.Validator.Identity
             _withResolver = new CpfValidatorStrategy(new CpfException());
         }
 
-        [Theory]
-        [InlineData("111.444.777-35", true)]
-        [InlineData("000.000.000-00", false)]
-        [InlineData("99999999999", false)]
-        [InlineData("", false)]
-        public void Validate_WithDefaultValidator_ShouldReturnCorrectResult(string cpf, bool expectedValid)
+        [Test, TestCaseSource(typeof(CpfCaseTest), "InvalidCPF")]
+        public void InvalidTestsCPF(string cpf, string erroMenssage)
         {
-            var result = _defaultValidator.Validate(cpf);
-            Assert.Equal(expectedValid, result.IsValid);
+            Assert.Throws(
+            typeof(ArgumentException),
+                () => { _withResolver.Validate(cpf, erroMenssage); }
+            );
         }
 
-        [Fact]
-        public void Validate_WithCustomMessage_ShouldOverride()
+        [Test, TestCaseSource(typeof(CpfCaseTest), "ValidCPF")]
+        public void ValidTestsCPF(string cpf)
         {
-            var customMessage = "CPF inválido customizado";
-            var result = _defaultValidator.Validate("12345678900", customMessage);
-
-            Assert.False(result.IsValid);
-            Assert.Equal(CpfCodeMsg.Code.EX04.ToString(), result.Code);
-            Assert.Equal(customMessage, result.Message);
-        }
-
-        [Fact]
-        public void Validate_WithResolver_ShouldProvideCustomMessage()
-        {
-            var result = _withResolver.Validate("12345678900");
-
-            Assert.False(result.IsValid);
-            Assert.Equal(CpfCodeMsg.Code.EX04.ToString(), result.Code);
-            Assert.Equal("CPF inválido: dígitos verificadores incorretos.", result.Message);
+            Assert.Throws(
+            typeof(ArgumentException),
+                () => { _defaultValidator.Validate(cpf); }
+            );
         }
     }
 }
