@@ -44,8 +44,9 @@ jobs:
 
     - name: Run Tests with Coverage
       run: |
-        dotnet test ValidationsGeral.Tests/ValidationsGeral.Tests.csproj \
-          --no-build --collect:"XPlat Code Coverage" \
+        dotnet test ValidationsGeral.Tests.csproj \
+          --no-build \
+          --collect:"XPlat Code Coverage" \
           --results-directory ./TestResults
 
     - name: Convert coverage to readable format
