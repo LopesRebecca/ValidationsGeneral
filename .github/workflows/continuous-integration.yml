@@ -46,13 +46,13 @@ jobs:
            --collect:"XPlat Code Coverage" \
            --results-directory ./TestResults
     
-    - name: Install SonarQube Cloud scanner
+    - name: Install Report Generator
       run: dotnet tool install -g dotnet-reportgenerator-globaltool
     
     - name: Convert coverage to readable format
       run: |
           reportgenerator \
-           -reports:TestResults/**/coverage.cobertura.xml \
+           -reports:TestResults/**/coverage.opencover.xml \
            -targetdir:CoverageReport \
            -reporttypes:Html
 
