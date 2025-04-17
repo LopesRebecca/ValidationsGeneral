@@ -21,12 +21,15 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore 
-  
+
     - name: Install SonarQube Cloud scanner
       run: dotnet tool install --global dotnet-sonarscanner
+
+    - name: Add dotnet tools to PATH
+      run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
       
     - name: SonarCloud Scan - Begin
-      run: dotnet sonarscanner begin /k:"LopesRebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      run: dotnet sonarscanner begin /k:"LopesRebecca_ValidationsGeneral" /o:"lopesrebecca" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
     
     - name: Build
       run: dotnet build --no-restore --configuration Release
