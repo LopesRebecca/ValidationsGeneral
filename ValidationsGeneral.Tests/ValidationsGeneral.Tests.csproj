@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="coverlet.collector" Version="3.3.2" />
   </ItemGroup>
 
   <ItemGroup>
