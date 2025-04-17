@@ -42,11 +42,6 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore --configuration Release
-    
-    - name: Install test SDK and collector
-      run: |
-        dotnet add ValidationsGeneral.Tests package Microsoft.NET.Test.Sdk --version 17.9.0
-        dotnet add ValidationsGeneral.Tests package coverlet.collector
 
     - name: Run Tests with Coverage
       run: |
