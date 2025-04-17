@@ -31,6 +31,9 @@ namespace ValidationsGeneral.Validator.Finance
 
         protected override ValidationResult ValidateInternal(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return Fail(CardCreditMsg.Code.EX02.ToString());
+
             int sum = 0;
             bool doubleDigit = false;
 

@@ -5,6 +5,7 @@ namespace ValidationsGeneral.Enum.Identity
         public enum Code
         {
             EX01, // Cartão invalido
+            EX02, // Cartão em branco
         }
 
         public static string GetMessage(Code code)
@@ -12,6 +13,7 @@ namespace ValidationsGeneral.Enum.Identity
             return code switch
             {
                 Code.EX01 => "Cartão inválido",
+                Code.EX02 => "Cartão em branco",
                 _ => "Erro desconhecido na validação de Cartão."
             };
         }

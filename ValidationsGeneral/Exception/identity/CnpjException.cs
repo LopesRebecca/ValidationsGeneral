@@ -3,7 +3,7 @@ using ValidationsGeneral.Interface;
 
 namespace ValidationsGeneral.Exception.identity
 {
-    class CnpjException : IValidationMessageResolver
+    public class CnpjException : IValidationMessageResolver
     {
         private readonly Dictionary<string, string> _messages = new()
         {
