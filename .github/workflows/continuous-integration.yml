@@ -52,7 +52,7 @@ jobs:
     - name: Convert coverage to readable format
       run: |
           reportgenerator \
-           -reports:TestResults/**/coverage.opencover.xml \
+           -reports:**/coverage.opencover.xml \
            -targetdir:CoverageReport \
            -reporttypes:Html
 
