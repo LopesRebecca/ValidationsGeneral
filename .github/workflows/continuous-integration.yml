@@ -45,7 +45,7 @@ jobs:
 
     - name: Run Tests with Coverage
       run: |
-        dotnet test ValidationsGeneral.Tests/ValidationsGeneral.Tests.csproj \
+        dotnet test ValidationsGeral.Tests/ValidationsGeral.Tests.csproj \
           --collect:"XPlat Code Coverage" \
           --results-directory ./TestResults
 
