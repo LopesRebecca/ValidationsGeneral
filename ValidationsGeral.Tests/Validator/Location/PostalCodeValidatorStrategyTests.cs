@@ -1,7 +1,7 @@
 ﻿using ValidationsGeneral.Enum.Location;
 using ValidationsGeneral.Validator.Location;
 
-namespace ValidationsGeneral.Tests.Validator.Location
+namespace ValidationsGeral.Tests.Validator.Location
 {
     [TestFixture]
     public class PostalCodeValidatorStrategyTests
