@@ -14,7 +14,8 @@ namespace ValidationsGeneral.Validator.Contact
     {
         private readonly IValidationMessageResolver? _messageResolver;
 
-        public PhoneValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        public PhoneValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null)
         {
             _messageResolver = messageResolver;
         }

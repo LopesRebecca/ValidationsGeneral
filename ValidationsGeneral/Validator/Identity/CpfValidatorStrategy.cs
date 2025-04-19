@@ -9,7 +9,8 @@ namespace ValidationsGeneral.Validator.Identity
     {
         private readonly IValidationMessageResolver? _messageResolver;
 
-        public CpfValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        public CpfValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null)
         {
             _messageResolver = messageResolver;
         }

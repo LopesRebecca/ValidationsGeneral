@@ -11,7 +11,9 @@ namespace ValidationsGeneral.Validator.Contact
         private readonly IValidationMessageResolver? _messageResolver;
         private readonly Func<string, bool>? _customRule;
 
-        public EmailValidatorStrategy(IValidationMessageResolver? messageResolver = null, Func<string, bool>? customRule = null)
+        public EmailValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null, 
+            Func<string, bool>? customRule = null)
         {
             _messageResolver = messageResolver;
             _customRule = customRule;
@@ -24,7 +26,9 @@ namespace ValidationsGeneral.Validator.Contact
             // Aplicando a regra customizada
             if (_customRule != null && !_customRule(input))
             {
-                return ValidationResult.Fail(EmailMsg.Code.EX03.ToString(), customMessage ?? "A regra customizada falhou.");
+                return ValidationResult.Fail(
+                    EmailMsg.Code.EX03.ToString(),
+                    customMessage ?? "A regra customizada falhou.");
             }
 
             if (!result.IsValid)

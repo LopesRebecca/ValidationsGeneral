@@ -52,7 +52,12 @@ namespace ValidationsGeneral.Validator.Date
             if (string.IsNullOrWhiteSpace(input))
                 return ValidationResult.Fail(AdvancedDateMsg.Code.EX01.ToString());
 
-            if (!DateTime.TryParseExact(input, _formats, _culture, DateTimeStyles.None, out var parsedDate))
+            if (!DateTime.TryParseExact(
+                input,
+                _formats,
+                _culture,
+                DateTimeStyles.None,
+                out var parsedDate))
                 return ValidationResult.Fail(AdvancedDateMsg.Code.EX02.ToString());
 
             if (_minDate.HasValue && parsedDate < _minDate.Value)

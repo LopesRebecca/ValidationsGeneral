@@ -9,7 +9,8 @@ namespace ValidationsGeneral.Validator.Identity
     {
         private readonly IValidationMessageResolver? _messageResolver;
 
-        public CnpjValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        public CnpjValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null)
         {
             _messageResolver = messageResolver;
         }

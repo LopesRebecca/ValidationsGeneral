@@ -9,7 +9,8 @@ namespace ValidationsGeneral.Validator.Contact
     {
         private readonly IValidationMessageResolver? _messageResolver;
 
-        public IsoDateValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        public IsoDateValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null)
         {
             _messageResolver = messageResolver;
         }
