@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ValidationsGeneral.Validator.Contact;
 using ValidationsGeneral.Validator.Date;
 using ValidationsGeneral.Validator.Finance;
@@ -47,7 +42,7 @@ namespace ValidationsGeneral.Extensions
             services.AddTransient<CnpjValidatorStrategy>();
             #endregion
 
-            #region Finance
+            #region Location
             services.AddTransient<CountryCodeValidatorStrategy>();
             services.AddTransient<PostalCodeValidatorStrategy>();
             services.AddTransient<TimezoneValidatorStrategy>();
