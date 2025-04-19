@@ -1,7 +1,7 @@
 ﻿using ValidationsGeneral.Enum.Contact;
 using ValidationsGeneral.Validator.Contact;
 
-namespace ValidationsGeneral.Tests.Validators
+namespace ValidationsGeral.Tests.Validator.Contact
 {
     [TestFixture]
     public class EmailValidatorStrategyTests

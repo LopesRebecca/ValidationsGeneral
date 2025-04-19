@@ -1,8 +1,7 @@
-﻿using NUnit.Framework;
+﻿using ValidationsGeneral.Enum.Contact;
 using ValidationsGeneral.Validator.Contact;
-using ValidationsGeneral.Enum.Contact;
 
-namespace ValidationsGeneral.Tests.Validators
+namespace ValidationsGeral.Tests.Validator.Contact
 {
     [TestFixture]
     public class IpAddressValidatorStrategyTests

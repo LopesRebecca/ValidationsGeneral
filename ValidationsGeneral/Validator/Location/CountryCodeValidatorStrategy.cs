@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ValidationsGeneral.Validator.Location
 {
-    class PostalCodeValidator
+    class CountryCodeValidatorStrategy
     {
     }
 }
