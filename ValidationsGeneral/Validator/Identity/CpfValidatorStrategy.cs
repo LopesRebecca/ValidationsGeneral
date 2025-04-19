@@ -2,7 +2,6 @@
 using ValidationsGeneral.Common;
 using ValidationsGeneral.Enum.Identity;
 using ValidationsGeneral.Interface;
-using static ValidationsGeneral.Common.ValidationResult;
 
 namespace ValidationsGeneral.Validator.Identity
 {
