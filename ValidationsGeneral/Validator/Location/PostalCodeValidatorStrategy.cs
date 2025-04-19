@@ -42,10 +42,10 @@ namespace ValidationsGeneral.Validator.Location
                 return ValidationResult.Fail(PostalCodeMsg.Code.EX01.ToString());
 
             if (!_postalCodeRegex.TryGetValue(_countryCode!, out var pattern))
-                return ValidationResult.Fail(PostalCodeMsg.Code.EX02.ToString()); // Código de país não suportado
+                return ValidationResult.Fail(PostalCodeMsg.Code.EX02.ToString()); 
 
             if (!Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase))
-                return ValidationResult.Fail(PostalCodeMsg.Code.EX03.ToString()); // Código postal inválido
+                return ValidationResult.Fail(PostalCodeMsg.Code.EX03.ToString()); 
 
             return ValidationResult.Success();
         }

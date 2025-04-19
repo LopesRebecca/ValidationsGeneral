@@ -44,7 +44,8 @@ namespace ValidationsGeneral.Validator.Location
             return ValidationResult.Success();
         }
 
-        private readonly HashSet<string> _validTimezones = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        private readonly HashSet<string> _validTimezones = 
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "UTC",
             "America/Sao_Paulo",

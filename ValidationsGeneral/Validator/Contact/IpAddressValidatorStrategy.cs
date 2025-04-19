@@ -9,7 +9,8 @@ namespace ValidationsGeneral.Validator.Contact
     {
         private readonly IValidationMessageResolver? _messageResolver;
 
-        public IpAddressValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        public IpAddressValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null)
         {
             _messageResolver = messageResolver;
         }

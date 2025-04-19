@@ -8,7 +8,8 @@ namespace ValidationsGeneral.Validator.Finance
     {
         private readonly IValidationMessageResolver? _messageResolver;
 
-        public CardCreditValidatorStrategy(IValidationMessageResolver? messageResolver = null)
+        public CardCreditValidatorStrategy(
+            IValidationMessageResolver? messageResolver = null)
         {
             _messageResolver = messageResolver;
         }
