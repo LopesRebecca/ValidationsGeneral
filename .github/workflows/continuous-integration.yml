@@ -39,7 +39,7 @@ jobs:
           /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
           /d:sonar.host.url="https://sonarcloud.io" \
           /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml" \
-          /d:sonar.coverage.exclusions="CoverageReport/*.html"
+          /d:sonar.exclusions="CoverageReport/**"
 
     - name: Build
       run: dotnet build --no-restore --configuration Release
