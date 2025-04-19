@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ValidationsGeneral.Validator.Finance
+namespace ValidationsGeneral.Validator.Location
 {
-    class IbanValidator
+    class CountryCodeValidatorStrategy
     {
     }
 }

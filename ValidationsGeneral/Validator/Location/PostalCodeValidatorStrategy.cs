@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ValidationsGeneral.Validator.Identity
+namespace ValidationsGeneral.Validator.Location
 {
-    class SsnValidator
+    class PostalCodeValidatorStrategy
     {
     }
 }
