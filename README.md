@@ -170,11 +170,11 @@ else
 - [x] Validações de Contato (Email, Telefone, IP, URL)
 - [x] Validações de Localização (CEP, Código do País, TimeZone)
 - [x] Validações de Datas e Idade
+- [x] Integração com SonarQube
 - [ ] Validação de NIF (Portugal)
 - [ ] Validação de Passaporte
 - [ ] Validação de SSN (EUA)
 - [ ] Suporte completo à internacionalização de mensagens de erro
-- [ ] Integração com SonarQube
 - [ ] Publicação automatizada via CI/CD
 
 ## 🤝 Contribuindo
