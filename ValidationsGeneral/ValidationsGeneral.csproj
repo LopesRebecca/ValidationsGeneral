@@ -4,6 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <PackageId>ValidationsGeneral</PackageId>
+	  <Version>1.0.0</Version>
+	  <Authors>Rebecca Lelis</Authors>
+	  <Description>Biblioteca para validações genéricas em .NET</Description>
+	  <PackageTags>validation, .NET, C#, CPF, CNPJ</PackageTags>
+	  <RepositoryUrl>https://github.com/LopesRebecca/ValidationsGeneral</RepositoryUrl>
+	  <!-- Caso tenha repositório -->
   </PropertyGroup>
 
   <ItemGroup>
