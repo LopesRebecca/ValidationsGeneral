@@ -1,11 +1,14 @@
-name: Publish NuGet Package
+name: Publish to NuGet
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - 'master'
+    tags:
+      - 'v*' # optional: only publish when a tag like v1.0.0 is created
 
 jobs:
-  publish:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,11 +23,14 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build project
+      - name: Build the project
         run: dotnet build --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
 
       - name: Pack NuGet package
         run: dotnet pack --configuration Release --no-build -o ./nupkg
 
-      - name: Publish package to NuGet
+      - name: Push package to NuGet
         run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
