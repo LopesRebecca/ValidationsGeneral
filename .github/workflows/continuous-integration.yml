@@ -1,30 +1,61 @@
-name: Publish NuGet Package
+name: CI - Validations
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    branches: [master]
+  push:
+    branches:
+      - 'master'
 
 jobs:
-  publish:
+  build-and-analyze:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Install dependencies
+      run: dotnet restore 
 
-      - name: Build project
-        run: dotnet build --configuration Release --no-restore
+    - name: Install SonarQube Cloud scanner
+      run: dotnet tool install --global dotnet-sonarscanner
 
-      - name: Pack NuGet package
-        run: dotnet pack --configuration Release --no-build -o ./nupkg
+    - name: Add dotnet tools to PATH
+      run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
-      - name: Publish package to NuGet
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+    - name: Install Report Generator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+    - name: SonarCloud Scan - Begin
+      run: |
+        dotnet sonarscanner begin \
+          /k:"LopesRebecca_ValidationsGeneral" \
+          /o:"lopesrebecca" \
+          /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+          /d:sonar.host.url="https://sonarcloud.io" \
+          /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml" \
+          /d:sonar.exclusions="CoverageReport/**"
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run Tests with Coverage
+      run: |
+        dotnet test ValidationsGeral.Tests/ValidationsGeral.Tests.csproj \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./TestResults
+
+    - name: Convert coverage to readable format
+      run: |
+        reportgenerator \
+          -reports:TestResults/**/coverage.cobertura.xml \
+          -targetdir:CoverageReport \
+          -reporttypes:Html
+
+    - name: SonarCloud Scan - End
+      run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
