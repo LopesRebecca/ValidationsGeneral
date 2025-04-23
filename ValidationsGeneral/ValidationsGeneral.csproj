@@ -9,7 +9,7 @@
 	  <Authors>Rebecca Lelis</Authors>
 	  <Description>Biblioteca para validações genéricas em .NET</Description>
 	  <PackageTags>validation, .NET, C#, CPF, CNPJ</PackageTags>
-	  <RepositoryUrl>https://github.com/SeuUsuario/ValidationsGeneral</RepositoryUrl>
+	  <RepositoryUrl>https://github.com/LopesRebecca/ValidationsGeneral</RepositoryUrl>
 	  <!-- Caso tenha repositório -->
   </PropertyGroup>
 
