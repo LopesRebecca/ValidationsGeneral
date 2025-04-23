@@ -26,20 +26,8 @@ jobs:
           echo "VERSION=$VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Update version in .csproj
+      - name: Update version in main .csproj
         run: |
-          FILE=$(find . -name "*.csproj")
+          FILE="./ValidationsGeneral/ValidationsGeneral.csproj"
           echo "Updating version in $FILE to ${{ steps.get_version.outputs.version }}"
-          sed -i "s|<Version>.*</Version>|<Version>${{ steps.get_version.outputs.version }}</Version>|" "$FILE"
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build project
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Pack NuGet package
-        run: dotnet pack --configuration Release --no-build -o ./nupkg
-
-      - name: Publish package to NuGet
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+          sed -i "s|<Version>.*</Version>|<Version>${{ steps*

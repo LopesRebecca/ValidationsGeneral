@@ -6,6 +6,11 @@ Todas as mudanças importantes para este projeto serão documentadas neste arqui
 ### Adicionado
 - **Refatoração**: Mudanças sugeridas após análise do SonarCloud
 
+## [v1.0.3] - 2025-04-23
+### Alterado
+- **Versionamento**: Atualização da pipeline de publicação para incluir o versionamento semântico.
+- **Campos Csproj**: Atualização dos campos `ProjectUrl` e `repositoryUrl` no arquivo `.csproj` para refletir o novo repositório.
+
 ## [v1.0.0] - 2025-04-23
 ### Adicionado
 - **Validações de Identidade**: Estratégias de validação para CPF e CNPJ.
