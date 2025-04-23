@@ -17,6 +17,21 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Get version from tag
+        id: get_version
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          echo "TAG_NAME=$TAG_NAME"
+          VERSION="${TAG_NAME#v}" # Remove o "v" da frente
+          echo "VERSION=$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update version in .csproj
+        run: |
+          FILE=$(find . -name "*.csproj")
+          echo "Updating version in $FILE to ${{ steps.get_version.outputs.version }}"
+          sed -i "s|<Version>.*</Version>|<Version>${{ steps.get_version.outputs.version }}</Version>|" "$FILE"
+
       - name: Restore dependencies
         run: dotnet restore
 
