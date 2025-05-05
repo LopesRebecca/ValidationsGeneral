@@ -45,40 +45,7 @@ O pacote NuGet está disponível no seguinte link: [ValidationsGeneral](https://
 dotnet add package ValidationsGeneral
 ```
 
-### 3. Exemplos de Validação
-
-```csharp
-using ValidationsGeneral;
-
-// Validação de CPF
-var cpfValido = DocumentValidator.IsValidCpf("123.456.789-09");
-Console.WriteLine($"CPF válido: {cpfValido}");
-
-// Validação de CNPJ
-var cnpjValido = DocumentValidator.IsValidCnpj("12.345.678/0001-95");
-Console.WriteLine($"CNPJ válido: {cnpjValido}");
-
-// Validação de Cartão de Crédito
-var cartaoValido = CreditCardValidator.IsValid("4111 1111 1111 1111");
-Console.WriteLine($"Cartão válido: {cartaoValido}");
-
-// Validação de Email
-var emailValido = ContactValidator.IsValidEmail("exemplo@email.com");
-Console.WriteLine($"Email válido: {emailValido}");
-
-// Validação de CEP
-var cepValido = LocationValidator.IsValidCep("01001-000");
-Console.WriteLine($"CEP válido: {cepValido}");
-
-// Validação com mensagens de erro internacionalizadas
-var resultado = DocumentValidator.ValidateCpf("12345678900", culture: "pt-BR");
-if (!resultado.IsValid)
-{
-    Console.WriteLine(resultado.ErrorMessage); // Ex: "CPF inválido"
-}
-```
-
-### 4. Configuração de Injeção de Dependência (DI)
+### 3. Configuração de Injeção de Dependência (DI)
 
 Para integrar a biblioteca **ValidationsGeneral** com Injeção de Dependência, adicione o seguinte código no seu `Startup.cs` ou `Program.cs` (dependendo da versão do .NET que você estiver usando):
 
@@ -117,7 +84,7 @@ public class MeuServico
 }
 ```
 
-### 5. Usando o ValidatorFactory
+### 4. Usando o ValidatorFactory
 
 A classe **ValidatorFactory** facilita a criação dinâmica de validadores com base no tipo de documento. Você pode usá-la quando precisar de uma abordagem mais flexível para validar documentos diferentes sem precisar instanciar manualmente os validadores.
 
@@ -139,7 +106,7 @@ public class DocumentService
 }
 ```
 
-### 6. Método de Extensão IsValid
+### 5. Método de Extensão IsValid
 
 A classe **ValidationExtensions** permite que você use a validação de forma mais fluída com a adição de um método de extensão `IsValid()`. Agora, você pode validar entradas de forma mais concisa sem precisar acessar diretamente o método `Validate` e o campo `IsValid`.
 
